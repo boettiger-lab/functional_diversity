@@ -156,4 +156,7 @@ get_bbs_compatible_sci_names <- function(){
 
 bbs_trait_compat <- get_bbs_compatible_sci_names()
 
-devtools::use_data(trait, bbs_trait_compat)
+readr::write_tsv(trait, "../data/trait.tsv.bz2")
+#trait <- read_tsv("../data/trait.tsv.bz2")
+
+#devtools::use_data(trait, bbs_trait_compat)
