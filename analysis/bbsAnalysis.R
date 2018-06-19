@@ -6,8 +6,8 @@ library(spData)
 library(sf)
 library(tmap)
 
-trait <- load("./data/trait.rda")
-bbs <- read_csv("./data/bbs_trait_compat.rda") 
+#trait <- load("./data/trait.rda")
+#bbs <- read_csv("./data/bbs_trait_compat.rda") 
 
 min_year = 2006 #define the minimum year of sampling to include
 p <-  102003 # USA Contiguous Albers Equal Area Conic - planar projection for st_ functions

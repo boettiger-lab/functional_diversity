@@ -3,4 +3,5 @@ Title: Simulate Scenarios of Diversity Loss in Ecological Communities
 Version: 0.0.0.9000
 Authors@R: person("Kari", "Norman", email = "kari.norman@berkeley.edu", role = c("aut", "cre"))
 Description: What the package does (one paragraph).
-Depends: dplyr, FD, roxygen2, stringr, sf, spData, tmap
+Depends: dplyr, FD, roxygen2, stringr, sf, spData, tmap, forecast
+RoxygenNote: 6.0.1
