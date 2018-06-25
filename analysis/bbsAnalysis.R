@@ -178,7 +178,14 @@ get_sample_fd <- function(x, ...){
   samp_species <- rownames(samp_trait_mat)
   sample_FD <- dbFD(x = samp_trait_mat, ...)
   #return(c(richness = x, head(sample_FD, -1))) #remove last element, which is the CWM for each trait - maybe add back in later?
-  return(list("species" = samp_species, "FD" = head(sample_FD, -1)))
+  #return(list("species" = samp_species, "FD" = head(sample_FD, -1)))
+  
+  ## Write to disk
+  out_df <- data.frame(species = samp_species,  head(sample_FD, -1))
+  write_tsv(out_df, paste0(samp_species, ".tsv.bz2"))
+  # rm(list=c(samp_trait_mat, samp_species, sample_FD))
+  
+  return(TRUE)
 }
 
 #test_sim <- plyr::ldply(100:length(species_pool), get_sample_fd(calc.FRic = FALSE)$species) #would work if dbFD didn't error out
