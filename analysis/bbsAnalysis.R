@@ -6,7 +6,7 @@ library(spData)
 library(sf)
 library(tmap)
 
-piggyback::pb_download(repo = "karinorman/functional_diversity")
+#piggyback::pb_download(repo = "karinorman/functional_diversity")
 
 load("./data/trait.rda")
 load("./data/bbs_trait_compat.rda")
@@ -182,35 +182,25 @@ get_sample_fd <- function(x, ...){
   
   ## Write to disk
   out_df <- data.frame(species = samp_species,  head(sample_FD, -1))
-  write_tsv(out_df, paste0(samp_species, ".tsv.bz2"))
+  write_tsv(out_df, paste0(x, ".tsv.bz2"))
   # rm(list=c(samp_trait_mat, samp_species, sample_FD))
-  
+  #out_df
   return(TRUE)
 }
 
-#test_sim <- plyr::ldply(100:length(species_pool), get_sample_fd(calc.FRic = FALSE)$species) #would work if dbFD didn't error out
 
 FDdf <- data.frame()
 rich_vals <- c()
 #for loop option, still need to add database for iterative storage
 
-profvis::profvis({
-samp_fd <- get_sample_fd(107)
-})
-#for(i in 106:length(species_pool)){
-  #possibleError <- tryCatch(
-  #  samp_fd <- get_sample_fd(i),
-  #  error=function(e)e
-  #)
-  #if(inherits(possibleError, "error")) next
-  
-  #rich_vals <- c(rich_vals, i)
-  #FDdf <- rbind(FDdf, samp_fd$FD)
-#}
+library(purrr)
+library(parallel)
+out <- mclapply(10:200, function(i) purrr::safely(get_sample_fd)((i)), mc.cores=2)
 
+FDdf <- purrr::map_dfr(fs::dir_ls(glob="*.tsv.bz2"), readr::read_tsv, .id = "sample")
 #recalculate broken case from for loop ^^^
-test_trait_mat <- get_trait_matrix(samp_fd$species)
-test_samp_fd <- dbFD(x = test_trait_mat)
+#test_trait_mat <- get_trait_matrix(samp_fd$species)
+#test_samp_fd <- dbFD(x = test_trait_mat)
 
 
 #preliminary plot of null curve
