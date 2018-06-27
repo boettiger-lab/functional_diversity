@@ -193,16 +193,20 @@ get_sample_fd <- function(x, ...){
 FDdf <- data.frame()
 rich_vals <- c()
 #for loop option, still need to add database for iterative storage
-for(i in 106:length(species_pool)){
-  possibleError <- tryCatch(
-    samp_fd <- get_sample_fd(i),
-    error=function(e)e
-  )
-  if(inherits(possibleError, "error")) next
+
+profvis::profvis({
+samp_fd <- get_sample_fd(107)
+})
+#for(i in 106:length(species_pool)){
+  #possibleError <- tryCatch(
+  #  samp_fd <- get_sample_fd(i),
+  #  error=function(e)e
+  #)
+  #if(inherits(possibleError, "error")) next
   
   #rich_vals <- c(rich_vals, i)
-  FDdf <- rbind(FDdf, samp_fd$FD)
-}
+  #FDdf <- rbind(FDdf, samp_fd$FD)
+#}
 
 #recalculate broken case from for loop ^^^
 test_trait_mat <- get_trait_matrix(samp_fd$species)
